@@ -39,12 +39,7 @@ button {
 }
 
 .grid-elem {
-    background-color: aquamarine;
     border: 1px solid black;
-}
-
-.grid-elem:hover {
-    background-color: brown;
 }
 
 #button-holder {

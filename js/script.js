@@ -8,13 +8,13 @@ inputField.style.color = 'gray';
 placeholder = 'Number of squares per row';
 inputField.value = placeholder;
 
-inputField.addEventListener('focus', function () {
+inputField.addEventListener('focus', function() {
     if (this.value === placeholder) {
         this.style.color = 'black';
         this.value = '';
     }
 });
-inputField.addEventListener('blur', function () {
+inputField.addEventListener('blur', function() {
     if (this.value === '') {
         this.style.color = 'gray';
         this.value = placeholder;
@@ -22,6 +22,7 @@ inputField.addEventListener('blur', function () {
 });
 
 function drawGrid(num) {
+    clearGrid();
     const grid_width = grid.offsetWidth;
 
     for(let i = 0; i < num**2; i++) {
@@ -29,6 +30,14 @@ function drawGrid(num) {
         grid_elem.classList.add('grid-elem');
         grid_elem.style.width = `${grid_width / num}px`;
         grid_elem.style.height = `${grid_width / num}px`;
+        grid_elem.addEventListener('mouseenter', function(e) {
+            if(!(e.buttons === 1)) return;
+            this.style.backgroundColor = 'blue';
+        });
+        
+        grid_elem.addEventListener("dragstart",(event)=>{
+            event.preventDefault();
+        });
 
         grid.appendChild(grid_elem);
     }
@@ -40,7 +49,6 @@ function clearGrid() {
     }
 }
 
-clearGrid();
 drawGrid(numberOfSquares);
 
 button.addEventListener('click', () => {
@@ -48,7 +56,6 @@ button.addEventListener('click', () => {
 
     if(!inputFieldValue || !Number.isInteger(inputFieldValue)) return;
 
-    clearGrid();
     drawGrid((inputFieldValue > 100) ? 100 : inputFieldValue);
 
-})
+});
