@@ -30,7 +30,13 @@ function drawGrid(num) {
         grid_elem.classList.add('grid-elem');
         grid_elem.style.width = `${grid_width / num}px`;
         grid_elem.style.height = `${grid_width / num}px`;
+
         grid_elem.addEventListener('mouseenter', function(e) {
+            if(!(e.buttons === 1)) return;
+            this.style.backgroundColor = 'blue';
+        });
+
+        grid_elem.addEventListener('mousedown', function(e) {
             if(!(e.buttons === 1)) return;
             this.style.backgroundColor = 'blue';
         });
