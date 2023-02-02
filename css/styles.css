@@ -31,6 +31,10 @@ button {
     background-color: #3882f6;
 }
 
+.apply {
+    margin-right: auto;
+}
+
 #grid {
     width: 870px;
     height: 870px;
@@ -45,6 +49,13 @@ button {
 #button-holder {
     display: flex;
     justify-content: space-between;
-    gap: 80px;
+    gap: 40px;
     margin: 10px 0px;
+    width: 870px;
+}
+
+.clicked {
+    background-color: #FDFD96;
+    border-color: #FDFD96;
+    color: black;
 }

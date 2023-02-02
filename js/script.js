@@ -1,8 +1,14 @@
 const grid = document.querySelector('#grid');
 const numberOfSquares = 16;
-const button = document.querySelector('button');
+const buttonApply = document.querySelector('.apply');
 const inputField = document.querySelector('input');
+const buttonRandom = document.querySelector('.random');
 
+let random = false;
+
+let RED = 0;
+let GREEN = 0;
+let BLUE = 255;
 
 inputField.style.color = 'gray';
 placeholder = 'Number of squares per row';
@@ -21,31 +27,39 @@ inputField.addEventListener('blur', function() {
     }
 });
 
+function randomColors() {
+    RED = Math.random() * 255;
+    GREEN = Math.random() * 255;
+    BLUE = Math.random() * 255;
+}
+
 function drawGrid(num) {
     clearGrid();
-    const grid_width = grid.offsetWidth;
+    const gridWidth = grid.offsetWidth;
 
     for(let i = 0; i < num**2; i++) {
-        let grid_elem = document.createElement('div');
-        grid_elem.classList.add('grid-elem');
-        grid_elem.style.width = `${grid_width / num}px`;
-        grid_elem.style.height = `${grid_width / num}px`;
+        let gridElem = document.createElement('div');
+        gridElem.classList.add('grid-elem');
+        gridElem.style.width = `${gridWidth / num}px`;
+        gridElem.style.height = `${gridWidth / num}px`;
 
-        grid_elem.addEventListener('mouseenter', function(e) {
+        gridElem.addEventListener('mouseenter', function(e) {
             if(!(e.buttons === 1)) return;
-            this.style.backgroundColor = 'blue';
+            if (random) randomColors();
+            this.style.backgroundColor = 'rgb(' + [RED,GREEN,BLUE].join(',') + ')';
         });
 
-        grid_elem.addEventListener('mousedown', function(e) {
+        gridElem.addEventListener('mousedown', function(e) {
             if(!(e.buttons === 1)) return;
-            this.style.backgroundColor = 'blue';
+            if (random) randomColors();
+            this.style.backgroundColor = 'rgb(' + [RED,GREEN,BLUE].join(',') + ')';
         });
         
-        grid_elem.addEventListener("dragstart",(event)=>{
+        gridElem.addEventListener("dragstart",(event)=>{
             event.preventDefault();
         });
 
-        grid.appendChild(grid_elem);
+        grid.appendChild(gridElem);
     }
 }
 
@@ -57,7 +71,7 @@ function clearGrid() {
 
 drawGrid(numberOfSquares);
 
-button.addEventListener('click', () => {
+buttonApply.addEventListener('click', () => {
     inputFieldValue = +inputField.value;
 
     if(!inputFieldValue || !Number.isInteger(inputFieldValue)) return;
@@ -65,3 +79,8 @@ button.addEventListener('click', () => {
     drawGrid((inputFieldValue > 100) ? 100 : inputFieldValue);
 
 });
+
+buttonRandom.addEventListener('click', function() {
+    this.classList.toggle('clicked');
+    random = !random;
+})
