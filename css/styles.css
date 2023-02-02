@@ -5,16 +5,35 @@
 body {
     margin: 0px;
     padding: 0px;
-    width: 100vw;
-    height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+input[type=text] {
+    padding: 0px 5px;
+    font-size: 25px;
+    border: none;
+    border-bottom: 2px solid #3882f6;
+}
+
+input[type=text]:focus {
+    outline: none;
+}
+
+button {
+    color: white;
+    font-size: 30px;
+    padding: 5px 15px;
+    border-color: #3882f6;
+    border-radius: 15px;
+    background-color: #3882f6;
+}
+
 #grid {
-    width: 900px;
-    height: 900px;
+    width: 870px;
+    height: 870px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -22,4 +41,15 @@ body {
 .grid-elem {
     background-color: aquamarine;
     border: 1px solid black;
+}
+
+.grid-elem:hover {
+    background-color: brown;
+}
+
+#button-holder {
+    display: flex;
+    justify-content: space-between;
+    gap: 80px;
+    margin: 10px 0px;
 }
