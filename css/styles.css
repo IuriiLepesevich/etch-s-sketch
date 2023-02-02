@@ -1,0 +1,25 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#grid {
+    width: 900px;
+    height: 900px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.grid-elem {
+    background-color: aquamarine;
+    border: 1px solid black;
+}
