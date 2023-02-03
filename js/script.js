@@ -7,14 +7,15 @@ const buttonErase = document.querySelector('.erase');
 const buttonRandom = document.querySelector('.random');
 const buttonBorder = document.querySelector('.border');
 const buttonClear = document.querySelector('.clear');
+const buttonPicker = document.querySelector('.pick');
 
 const buttonColor = document.querySelector('.color');
-const colorPicker = document.querySelector('#val1');
-
+const colorPalette = document.querySelector('#val1');
 
 let random = false;
 let border = true;
 let erase = false;
+let picking = false;
 
 let colorBackground = '#ffffff';
 
@@ -30,15 +31,31 @@ const getRandomColors = () => {
     return '#' + n.slice(0, 6);
 };
 
+function customFocus(elem) {
+    elem.focus();
+    const e = new Event("change");
+    colorPalette.dispatchEvent(e);
+}
+
 function fillElem(e) {
     if(!(e.buttons === 1)) return;
     if (erase) {
         this.style.backgroundColor = colorBackground;
+    } else if (picking) {
+        colorPalette.value = this.style.backgroundColor;
+        setTimeout(customFocus, 1, colorPalette);
+
+        picking = !picking;
+        buttonPicker.classList.toggle('clicked');
+
+        if (border) this.style.border = '1px solid black';
+        else this.style.border = '0px solid black';
     } else {
-        colorPen = (random) ? getRandomColors() : colorPicker.value;
+        colorPen = (random) ? getRandomColors() : colorPalette.value;
         this.style.backgroundColor = colorPen;
     }
 }
+
 
 function controlBorder(elem ,state) {
     if (state) elem.style.border = '1px solid black';
@@ -48,6 +65,7 @@ function controlBorder(elem ,state) {
 function drawGrid(num) {
     clearGrid();
     const gridWidth = grid.offsetWidth - parseInt(getComputedStyle(grid).getPropertyValue('border-width')) * 2;
+    
 
     for(let i = 0; i < num**2; i++) {
         let gridElem = document.createElement('div');
@@ -60,6 +78,17 @@ function drawGrid(num) {
 
         gridElem.addEventListener('mouseenter', fillElem);
         gridElem.addEventListener('mousedown', fillElem);
+
+        gridElem.addEventListener('mouseover', function() {
+            if (picking) this.style.border = '4px solid red';
+        });
+
+        gridElem.addEventListener('mouseleave', function() {
+            if (picking) {
+                if (border) this.style.border = '1px solid black';
+                else this.style.border = '0px solid black';
+            }
+        });
         
         gridElem.addEventListener("dragstart",(event)=>{
             event.preventDefault();
@@ -85,6 +114,7 @@ function checkFieldInput() {
     }
 }
 
+
 // Default text functionality taken
 // from: https://stackoverflow.com/questions/1102895/default-text-on-input
 inputField.addEventListener('focus', function() {
@@ -101,8 +131,14 @@ inputField.addEventListener('blur', function() {
 });
 
 buttonErase.addEventListener('click', function() {
-    this.classList.toggle('clicked');
     erase = !erase;
+    this.classList.toggle('clicked');
+
+    random = false;
+    buttonRandom.classList.remove('clicked');
+
+    picking = false;
+    buttonPicker.classList.remove('clicked');
 })
 
 buttonBorder.addEventListener('click', function() {
@@ -123,14 +159,31 @@ buttonApply.addEventListener('click', () => {
 });
 
 buttonRandom.addEventListener('click', function() {
-    this.classList.toggle('clicked');
     random = !random;
+    this.classList.toggle('clicked');
+    
+    erase = false;
+    buttonErase.classList.remove('clicked');
+
+    picking = false;
+    buttonPicker.classList.remove('clicked');
 });
 
 buttonClear.addEventListener('click', () => {
     for(const elem of grid.children) {
         elem.style.backgroundColor = colorBackground;
     }
-})
+});
+
+buttonPicker.addEventListener('click', function() {
+    picking = !picking;
+    this.classList.toggle('clicked');
+
+    erase = false;
+    buttonErase.classList.remove('clicked');
+
+    random = false;
+    buttonRandom.classList.remove('clicked');
+});
 
 drawGrid(numberOfSquares);
