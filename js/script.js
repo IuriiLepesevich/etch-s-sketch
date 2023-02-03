@@ -28,6 +28,11 @@ function fillElem(e) {
     this.style.backgroundColor = 'rgb(' + [RED,GREEN,BLUE].join(',') + ')';
 }
 
+function controlBorder(elem ,state) {
+    if (state) elem.style.border = '1px solid black';
+    else elem.style.border = '0px solid black';
+}
+
 function drawGrid(num) {
     clearGrid();
     const gridWidth = grid.offsetWidth - parseInt(getComputedStyle(grid).getPropertyValue('border-width')) * 2;
@@ -38,8 +43,7 @@ function drawGrid(num) {
         gridElem.style.width = `${gridWidth / num}px`;
         gridElem.style.height = `${gridWidth / num}px`;
 
-        if (border) gridElem.style.border = '1px solid black';
-        else gridElem.style.border = '0px solid black';
+        controlBorder(gridElem, border);
 
         gridElem.addEventListener('mouseenter', fillElem);
         gridElem.addEventListener('mousedown', fillElem);
@@ -74,9 +78,8 @@ inputField.addEventListener('blur', function() {
 buttonBorder.addEventListener('click', function() {
     this.classList.toggle('clicked');
     border = !border;
-    for(let elem of grid.children) {
-        if (border) elem.style.border = '1px solid black';
-        else elem.style.border = '0px solid black';
+    for(const elem of grid.children) {
+        controlBorder(elem, border);
     }
 })
 
