@@ -3,6 +3,7 @@ let numberOfSquares = 16;
 const inputField = document.querySelector('input');
 
 const buttonApply = document.querySelector('.apply');
+const buttonErase = document.querySelector('.erase');
 const buttonRandom = document.querySelector('.random');
 const buttonBorder = document.querySelector('.border');
 const buttonClear = document.querySelector('.clear');
@@ -13,14 +14,13 @@ const colorPicker = document.querySelector('#val1');
 
 let random = false;
 let border = true;
+let erase = false;
 
-let redBackground = 255;
-let greenBackground = 255;
-let blueBackground = 255;
+let colorBackground = '#ffffff';
 
 let colorPen = '#3882f6';
 
-inputField.style.color = 'gray';
+inputField.style.color = '#A9A9A9';
 placeholder = 'Number of squares per row';
 inputField.value = placeholder;
 
@@ -32,8 +32,12 @@ const getRandomColors = () => {
 
 function fillElem(e) {
     if(!(e.buttons === 1)) return;
-    colorPen = (random) ? getRandomColors() : colorPicker.value;
-    this.style.backgroundColor = colorPen;
+    if (erase) {
+        this.style.backgroundColor = colorBackground;
+    } else {
+        colorPen = (random) ? getRandomColors() : colorPicker.value;
+        this.style.backgroundColor = colorPen;
+    }
 }
 
 function controlBorder(elem ,state) {
@@ -50,7 +54,7 @@ function drawGrid(num) {
         gridElem.classList.add('grid-elem');
         gridElem.style.width = `${gridWidth / num}px`;
         gridElem.style.height = `${gridWidth / num}px`;
-        gridElem.style.backgroundColor = 'rgb(' + [redBackground, greenBackground, blueBackground].join(',') + ')';
+        gridElem.style.backgroundColor = colorBackground;
 
         controlBorder(gridElem, border);
 
@@ -81,18 +85,25 @@ function checkFieldInput() {
     }
 }
 
+// Default text functionality taken
+// from: https://stackoverflow.com/questions/1102895/default-text-on-input
 inputField.addEventListener('focus', function() {
     if (this.value === placeholder) {
-        this.style.color = 'black';
+        this.style.color = 'white';
         this.value = '';
     }
 });
 inputField.addEventListener('blur', function() {
     if (this.value === '') {
-        this.style.color = 'gray';
+        this.style.color = '#A9A9A9';
         this.value = placeholder;
     }
 });
+
+buttonErase.addEventListener('click', function() {
+    this.classList.toggle('clicked');
+    erase = !erase;
+})
 
 buttonBorder.addEventListener('click', function() {
     this.classList.toggle('clicked');
@@ -118,7 +129,7 @@ buttonRandom.addEventListener('click', function() {
 
 buttonClear.addEventListener('click', () => {
     for(const elem of grid.children) {
-        elem.style.backgroundColor = 'rgb(' + [redBackground, greenBackground, blueBackground].join(',') + ')';
+        elem.style.backgroundColor = colorBackground;
     }
 })
 

@@ -6,27 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Etch A Sketch</title>
     <link rel="stylesheet" href="./css/styles.css">
+    <link href="https://fonts.cdnfonts.com/css/games" rel="stylesheet">
     <script src="./js/jscolor.js"></script>
     <script src="./js/script.js" defer></script>
 </head>
 <body>
-    <div id="button-holder">
-        <div class="row-selector">
-            <input type="text">
-            <button class="apply">Apply</button>
-        </div>
-        <button class="clear">Clear</button>
-        <button class="random">Random Colors</button>
-        <button class="border">Grid border</button>
-        
-        <div class="color-holder">
-            <!--
-                Color picker is taken from: https://jscolor.com/
-            -->
-            <button class="color" data-jscolor="{valueElement:'#val1'}"></button>
-            <input id="val1" value="#3882f6">
+    <div class="left-container">
+        <div class="logo-text">Etch A Sketch</div>
+        <div id="button-holder">
+            <div class="row-selector">
+                <input type="text">
+                <button class="apply">Apply</button>
+            </div>
+            <button class="erase">Eraser</button>
+            <button class="random">Random Colors</button>
+            <button class="border">Grid border</button>
+            <button class="clear">Clear</button>
+            
+            <div class="color-holder">
+                <!--
+                    Color picker is taken from: https://jscolor.com/
+                -->
+                <button class="color" data-jscolor="{valueElement:'#val1'}"></button>
+                <input id="val1" value="#3882f6">
+            </div>
         </div>
     </div>
-    <div id="grid" draggable="false"></div>
+    <div class="grid-holder">
+        <div id="grid" draggable="false"></div>
+    </div>
 </body>
 </html>
