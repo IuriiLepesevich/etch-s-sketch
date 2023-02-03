@@ -35,7 +35,7 @@ function randomColors() {
 
 function drawGrid(num) {
     clearGrid();
-    const gridWidth = grid.offsetWidth;
+    const gridWidth = grid.offsetWidth - parseInt(getComputedStyle(grid).getPropertyValue('border-width')) * 2;
 
     for(let i = 0; i < num**2; i++) {
         let gridElem = document.createElement('div');
@@ -83,4 +83,4 @@ buttonApply.addEventListener('click', () => {
 buttonRandom.addEventListener('click', function() {
     this.classList.toggle('clicked');
     random = !random;
-})
+});
