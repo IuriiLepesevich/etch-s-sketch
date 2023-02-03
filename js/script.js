@@ -1,31 +1,39 @@
 const grid = document.querySelector('#grid');
 let numberOfSquares = 16;
-const buttonApply = document.querySelector('.apply');
 const inputField = document.querySelector('input');
+
+const buttonApply = document.querySelector('.apply');
 const buttonRandom = document.querySelector('.random');
 const buttonBorder = document.querySelector('.border');
+const buttonClear = document.querySelector('.clear');
+
+const buttonColor = document.querySelector('.color');
+const colorPicker = document.querySelector('#val1');
+
 
 let random = false;
 let border = true;
 
-let RED = 0;
-let GREEN = 0;
-let BLUE = 255;
+let redBackground = 255;
+let greenBackground = 255;
+let blueBackground = 255;
+
+let colorPen = '#3882f6';
 
 inputField.style.color = 'gray';
 placeholder = 'Number of squares per row';
 inputField.value = placeholder;
 
-function randomColors() {
-    RED = Math.random() * 255;
-    GREEN = Math.random() * 255;
-    BLUE = Math.random() * 255;
-}
+//#Source https://bit.ly/2neWfJ2 
+const getRandomColors = () => {
+    let n = (Math.random() * 0xfffff * 1000000).toString(16);
+    return '#' + n.slice(0, 6);
+};
 
 function fillElem(e) {
     if(!(e.buttons === 1)) return;
-    if (random) randomColors();
-    this.style.backgroundColor = 'rgb(' + [RED,GREEN,BLUE].join(',') + ')';
+    colorPen = (random) ? getRandomColors() : colorPicker.value;
+    this.style.backgroundColor = colorPen;
 }
 
 function controlBorder(elem ,state) {
@@ -42,6 +50,7 @@ function drawGrid(num) {
         gridElem.classList.add('grid-elem');
         gridElem.style.width = `${gridWidth / num}px`;
         gridElem.style.height = `${gridWidth / num}px`;
+        gridElem.style.backgroundColor = 'rgb(' + [redBackground, greenBackground, blueBackground].join(',') + ')';
 
         controlBorder(gridElem, border);
 
@@ -59,6 +68,16 @@ function drawGrid(num) {
 function clearGrid() {
     while (grid.firstChild) {
         grid.removeChild(grid.firstChild);
+    }
+}
+
+function checkFieldInput() {
+    if (!inputFieldValue || !Number.isInteger(inputFieldValue)) {
+        inputField.style.borderColor = '#ff3333';
+        return false;
+    } else {
+        inputField.style.borderColor = '#3882f6';
+        return true;
     }
 }
 
@@ -85,8 +104,7 @@ buttonBorder.addEventListener('click', function() {
 
 buttonApply.addEventListener('click', () => {
     inputFieldValue = +inputField.value;
-
-    if(!inputFieldValue || !Number.isInteger(inputFieldValue)) return;
+    if(!checkFieldInput()) return;
 
     numberOfSquares = (inputFieldValue > 100) ? 100 : inputFieldValue;
     drawGrid(numberOfSquares);
@@ -97,5 +115,11 @@ buttonRandom.addEventListener('click', function() {
     this.classList.toggle('clicked');
     random = !random;
 });
+
+buttonClear.addEventListener('click', () => {
+    for(const elem of grid.children) {
+        elem.style.backgroundColor = 'rgb(' + [redBackground, greenBackground, blueBackground].join(',') + ')';
+    }
+})
 
 drawGrid(numberOfSquares);

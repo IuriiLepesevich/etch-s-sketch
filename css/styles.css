@@ -12,15 +12,18 @@ body {
     gap: 100px;
 }
 
-input[type=text] {
+input {
     padding: 0px 5px;
     font-size: 22px;
-    width: 70%;
     border: none;
-    border-bottom: 2px solid #3882f6;
+    border-bottom: 4px solid #3882f6;
 }
 
-input[type=text]:focus {
+input[type=text] {
+    width: 70%;
+}
+
+input:focus {
     outline: none;
 }
 
@@ -39,9 +42,6 @@ button {
     display: flex;
     flex-wrap: wrap;
     border: 1px solid black;
-}
-
-.grid-elem {
 }
 
 #button-holder {
@@ -66,4 +66,18 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.color-holder {
+    display: flex;
+    justify-content: start;
+}
+
+.color {
+    width: 60%;
+    margin-right: auto;
+}
+
+#val1 {
+    width: 30%;
 }
