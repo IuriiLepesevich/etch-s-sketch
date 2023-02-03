@@ -5,15 +5,17 @@
 body {
     margin: 0px;
     padding: 0px;
+    height: 100vh;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 100px;
 }
 
 input[type=text] {
     padding: 0px 5px;
-    font-size: 25px;
+    font-size: 22px;
+    width: 70%;
     border: none;
     border-bottom: 2px solid #3882f6;
 }
@@ -31,10 +33,6 @@ button {
     background-color: #3882f6;
 }
 
-.apply {
-    margin-right: auto;
-}
-
 #grid {
     width: 870px;
     height: 870px;
@@ -44,19 +42,28 @@ button {
 }
 
 .grid-elem {
-    border: 1px solid black;
 }
 
 #button-holder {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     gap: 40px;
     margin: 10px 0px;
-    width: 870px;
+    width: 470px;
+    border: 1px solid black;
+    padding: 30px;
+    justify-content: space-between;
+    align-items: stretch;
 }
 
 .clicked {
     background-color: #FDFD96;
     border-color: #FDFD96;
     color: black;
+}
+
+.row-selector {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
