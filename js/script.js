@@ -186,4 +186,15 @@ buttonPicker.addEventListener('click', function() {
     buttonRandom.classList.remove('clicked');
 });
 
+colorPalette.addEventListener('change', () => {
+    erase = false;
+    buttonErase.classList.remove('clicked');
+
+    random = false;
+    buttonRandom.classList.remove('clicked');
+
+    picking = false;
+    buttonPicker.classList.remove('clicked');
+});
+
 drawGrid(numberOfSquares);
