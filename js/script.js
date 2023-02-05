@@ -1,5 +1,5 @@
 const grid = document.querySelector('#grid');
-let numberOfSquares = 16;
+
 const inputField = document.querySelector('input');
 
 const buttonApply = document.querySelector('.apply');
@@ -11,6 +11,8 @@ const buttonPicker = document.querySelector('.pick');
 
 const buttonColor = document.querySelector('.color');
 const colorPalette = document.querySelector('#val1');
+
+let numberOfSquares = 16;
 
 let random = false;
 let border = true;
@@ -56,7 +58,6 @@ function fillElem(e) {
     }
 }
 
-
 function controlBorder(elem ,state) {
     if (state) elem.style.border = '1px solid black';
     else elem.style.border = '0px solid black';
@@ -80,7 +81,7 @@ function drawGrid(num) {
         gridElem.addEventListener('mousedown', fillElem);
 
         gridElem.addEventListener('mouseover', function() {
-            if (picking) this.style.border = '4px solid red';
+            if (picking) this.style.border = `${parseFloat(gridElem.style.width) / 8}px solid red`;
         });
 
         gridElem.addEventListener('mouseleave', function() {
