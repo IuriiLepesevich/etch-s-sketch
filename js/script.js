@@ -24,7 +24,7 @@ let colorBackground = '#ffffff';
 let colorPen = '#3882f6';
 
 inputField.style.color = '#A9A9A9';
-placeholder = 'Number of squares per row';
+placeholder = 'Squares per row';
 inputField.value = placeholder;
 
 //#Source https://bit.ly/2neWfJ2 
@@ -63,16 +63,23 @@ function controlBorder(elem ,state) {
     else elem.style.border = '0px solid black';
 }
 
+function clearGrid() {
+    while (grid.firstChild) {
+        grid.removeChild(grid.firstChild);
+    }
+}
+
 function drawGrid(num) {
     clearGrid();
     const gridWidth = grid.offsetWidth - parseInt(getComputedStyle(grid).getPropertyValue('border-width')) * 2;
-    
+    const elemSize = parseFloat(100 / num);
 
+    
     for(let i = 0; i < num**2; i++) {
         let gridElem = document.createElement('div');
         gridElem.classList.add('grid-elem');
-        gridElem.style.width = `${gridWidth / num}px`;
-        gridElem.style.height = `${gridWidth / num}px`;
+        gridElem.style.width = `${elemSize}%`;
+        gridElem.style.height = `${elemSize}%`;
         gridElem.style.backgroundColor = colorBackground;
 
         controlBorder(gridElem, border);
@@ -96,12 +103,6 @@ function drawGrid(num) {
         });
 
         grid.appendChild(gridElem);
-    }
-}
-
-function clearGrid() {
-    while (grid.firstChild) {
-        grid.removeChild(grid.firstChild);
     }
 }
 
@@ -196,6 +197,15 @@ colorPalette.addEventListener('change', () => {
 
     picking = false;
     buttonPicker.classList.remove('clicked');
+});
+
+window.addEventListener('resize', () => {
+    const gridWidth = grid.offsetWidth - parseInt(getComputedStyle(grid).getPropertyValue('border-width')) * 2;
+    const elemSize = parseFloat(100 / numberOfSquares);
+    for(const gridElem of grid.children) {
+        gridElem.style.width = `${elemSize}%`;
+        gridElem.style.height = `${elemSize}%`;
+    }
 });
 
 drawGrid(numberOfSquares);
