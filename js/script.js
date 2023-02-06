@@ -88,7 +88,7 @@ function drawGrid(num) {
         gridElem.addEventListener('mousedown', fillElem);
 
         gridElem.addEventListener('mouseover', function() {
-            if (picking) this.style.border = `${parseFloat(gridElem.style.width) / 8}px solid red`;
+            if (picking) this.style.border = `${parseFloat(gridElem.style.width) / 1.2}px solid red`;
         });
 
         gridElem.addEventListener('mouseleave', function() {
